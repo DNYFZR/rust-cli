@@ -1,3 +1,6 @@
+// Rust CLI 
+mod terminal;
+
 fn main() {
-    println!("Hello, world!");
+    terminal::run()
 }
