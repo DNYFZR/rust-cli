@@ -37,7 +37,7 @@ fn move_cwd(args: SplitWhitespace<'_>) {
     let new_dir = if new_dir == "-" { root } else { new_dir.to_string() };
     
     if let Err(e) = std::env::set_current_dir(&new_dir) {
-        eprintln!("{}", e)
+        eprintln!("{}", e);
     }
 }
 
@@ -165,4 +165,27 @@ pub fn run() {
             }
         }
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::terminal;
+
+    #[test]
+    fn test_get_cwd() {
+        let expected = std::env::current_dir().ok().unwrap();
+        assert_eq!(expected, terminal::get_cwd());
+    }
+
+    #[test]
+    fn test_parse_cwd() {
+        let expected = std::env::current_dir().ok().unwrap().display().to_string();
+        assert_eq!(expected, terminal::parse_cwd(&terminal::get_cwd()));
+    }
+
+    // #[test]
+    // fn test_move_cwd() {
+    //     let expected = std::env::current_dir().ok().unwrap().parent().unwrap().display().to_string();
+        
+    // }
 }
